@@ -1,8 +1,6 @@
 [![NPM](https://nodei.co/npm/run-on.png)](https://npmjs.org/package/run-on)
 
-[![Join the chat at https://gitter.im/mr47/run-on](https://badges.gitter.im/mr47/run-on.svg)](https://gitter.im/mr47/run-on?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-[![Build Status](https://semaphoreci.com/api/v1/mr47/run-on/branches/master/badge.svg)](https://semaphoreci.com/mr47/run-on)
+[![Linux Build Status](https://img.shields.io/travis/mr47/run-on.svg?style=flat&label=Travis)](https://travis-ci.org/mr47/run-on)
 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
