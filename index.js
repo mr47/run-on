@@ -5,7 +5,8 @@ var platformIs = require('platform-is');
 program
   .option('-e, --encoding [type]', 'Specify the encoding of dotenv file')
   .option('-p, --path [type]', 'Specify a custom path of dotenv file')
-  .option('-o, --on <items>', 'Specify a custom path of dotenv file', function (val) {
+  .option('-r, --raw', 'Should run a raw command ?')
+  .option('-o, --on <items>', 'Specify a platform to run on', function (val) {
     return val.split(',');
   })
   .option('-s, --silent', 'silent')
@@ -50,7 +51,7 @@ if (!scriptName) {
   process.stderr.write('ERROR: No script name provided!');
   process.exit(1);
 }
-if (!pkg.betterScripts[scriptName] || !pkg.scripts[scriptName]) {
+if ((!pkg.betterScripts[scriptName] || !pkg.scripts[scriptName]) && !program.raw) {
   process.stderr.write('ERROR: No script / betterScript with name "' + scriptName + '" was found!');
   process.exit(1);
 }
@@ -59,7 +60,13 @@ if(!program.silent) {
   console.log('Executing script: ' + scriptName + '\n');
 }
 
-exec(pkg.betterScripts[scriptName] || pkg.scripts[scriptName], program, function (error, stdout, stderr) {
+var run = '';
+if (program.raw){
+  run = program.args.join(' ');
+} else {
+  run = pkg.betterScripts[scriptName] || pkg.scripts[scriptName];
+}
+exec(run, program, function (error, stdout, stderr) {
   process.stderr.write(stderr);
   process.stdout.write(stdout);
   if(error !== null) {
