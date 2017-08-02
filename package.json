@@ -1,7 +1,7 @@
 {
   "name": "run-on",
   "description": "Better NPM scripts runner with special addon for platform specific runs",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "license": "MIT",
   "author": "Dmitry Poddubniy <mr4700@gmail.com>",
   "contributors": [
