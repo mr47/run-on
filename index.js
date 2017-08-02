@@ -51,7 +51,7 @@ if (!scriptName) {
   process.stderr.write('ERROR: No script name provided!');
   process.exit(1);
 }
-if ((!pkg.betterScripts[scriptName] || !pkg.scripts[scriptName]) && !program.raw) {
+if ((pkg.betterScripts && !pkg.betterScripts[scriptName] || pkg.scripts && !pkg.scripts[scriptName]) && !program.raw) {
   process.stderr.write('ERROR: No script / betterScript with name "' + scriptName + '" was found!');
   process.exit(1);
 }
