@@ -1,21 +1,23 @@
 {
-  "name": "better-npm-run",
-  "description": "Better NPM scripts runner",
+  "name": "run-on",
+  "description": "Better NPM scripts runner with special addon for platform specific runs",
   "version": "0.1.0",
   "license": "MIT",
-  "author": "Benjamin Orozco <benoror@gmail.com>",
+  "author": "Dmitry Poddubniy <mr4700@gmail.com>",
   "contributors": [
     "Benjamin Orozco <benoror@gmail.com>",
-    "Kent C. Dodds <kent@doddsfamily.us>"
+    "Kent C. Dodds <kent@doddsfamily.us>",
+    "Dmitry Poddubniy <mr4700@gmail.com>"
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/benoror/better-npm-run.git"
+    "url": "git://github.com/mr47/run-on.git"
   },
   "main": "index.js",
   "bin": {
     "bnr": "index.js",
-    "better-npm-run": "index.js"
+    "better-npm-run": "index.js",
+    "run-on": "index.js"
   },
   "scripts": {
     "test:env": "node index.js test:env",
@@ -29,7 +31,8 @@
   "dependencies": {
     "commander": "^2.9.0",
     "dotenv": "^2.0.0",
-    "object-assign": "^4.0.1"
+    "object-assign": "^4.0.1",
+    "platform-is": "^1.0.4"
   },
   "betterScripts": {
     "test:command:string": "node ./test/command.js",
