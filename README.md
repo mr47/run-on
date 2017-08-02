@@ -1,8 +1,8 @@
-[![NPM](https://nodei.co/npm/better-npm-run.png)](https://npmjs.org/package/better-npm-run)
+[![NPM](https://nodei.co/npm/run-on.png)](https://npmjs.org/package/run-on)
 
-[![Join the chat at https://gitter.im/benoror/better-npm-run](https://badges.gitter.im/benoror/better-npm-run.svg)](https://gitter.im/benoror/better-npm-run?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/mr47/run-on](https://badges.gitter.im/mr47/run-on.svg)](https://gitter.im/mr47/run-on?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[![Build Status](https://semaphoreci.com/api/v1/benoror/better-npm-run/branches/master/badge.svg)](https://semaphoreci.com/benoror/better-npm-run)
+[![Build Status](https://semaphoreci.com/api/v1/mr47/run-on/branches/master/badge.svg)](https://semaphoreci.com/mr47/run-on)
 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
@@ -40,12 +40,14 @@ To this:
 ```JSON
 {
   "devDependencies": {
-    "better-npm-run": "~0.0.1"
+    "run-on": "~0.0.1"
   },
   "scripts": {
-    "build:dist": "better-npm-run build:dist",
-    "build:prod": "better-npm-run build:prod",
-    "test": "better-npm-run test"
+    "build:dist": "run-on build:dist",
+    "build:prod": "run-on build:prod",
+    "test": "run-on test",
+    "test:special": "run-on --on mac,linux build:dist",
+    "raw:test": "run-on --on windows --raw echo 'test'"
   },
   "betterScripts": {
     "build:dist": "webpack --config $npm_package_webpack --progress --colors",
@@ -118,16 +120,16 @@ forever start -l ${PWD}/logs/forever.log -o ${PWD}/logs/out.log -e ${PWD}/logs/e
 ## cli commands
 
 This module expose 2 cli commands:
-- `better-npm-run` and,
+- `run-on` and,
 - a shorter one: `bnr` which is an alias to the former.
 
-The shorter one is useful for cases where you have a script that calls several `better-npm-run` scripts. e.g:
+The shorter one is useful for cases where you have a script that calls several `run-on` scripts. e.g:
 
 using the normal cli name
 
 ```javascript
 "scripts": {
-  "dev": "shell-exec 'better-npm-run install-hooks' 'better-npm-run watch-client' 'better-npm-run start-dev' 'better-npm-run start-dev-api' 'better-npm-run start-dev-worker' 'better-npm-run start-dev-socket'",
+  "dev": "shell-exec 'run-on install-hooks' 'run-on watch-client' 'run-on start-dev' 'run-on start-dev-api' 'run-on start-dev-worker' 'run-on start-dev-socket'",
 }
 ```
 
@@ -157,4 +159,32 @@ Also use `-e` or verbose `--encoding` to specify the encoding of dotenv file
 bnr --encoding=base64 start-dev
 ```
 
+Also use `-o` or verbose `--on` to specify platform that script should run on
+```
+run-on --on linux,mac start-dev
+run-on --on windows start-dev-win
+```
+Also use `-r` or verbose `--raw` to run a command in current env, like `dir` on windows or `rm -rf ./lib` on linux
+
+```
+run-on --raw echo 'test'
+run-on --raw cross-env TEST=123 my-special-run
+```
+
+
+by using `--on` and `--raw` you can archive platform specific commands that doesn't require to write shell scripts.
+
+```
+run-on --on linux,windows --raw cross-env TEST=123 my-special-run && run-on --on windows --raw cross-env TEST=123 my-special-run-win
+```
+
 See [envdot docs](https://github.com/motdotla/dotenv) for more infomation
+
+Original author: [benoror](https://github.com/benoror/better-npm-run)
+
+### License
+
+Copyright © 2017, [Dmitry Poddubniy](https://github.com/mr47).
+Released under the [MIT License](LICENSE).
+
+***
