@@ -2,14 +2,12 @@
 var program = require('commander');
 var platformIs = require('platform-is');
 
-function list(val) {
-  return val.split(',');
-}
-
 program
   .option('-e, --encoding [type]', 'Specify the encoding of dotenv file')
   .option('-p, --path [type]', 'Specify a custom path of dotenv file')
-  .option('-o, --on <items>', 'Specify a custom path of dotenv file', list)
+  .option('-o, --on <items>', 'Specify a custom path of dotenv file', function (val) {
+    return val.split(',');
+  })
   .option('-s, --silent', 'silent')
   .parse(process.argv);
 var scriptName = program.args[0];
@@ -48,16 +46,12 @@ if (!pkg.scripts) {
   process.stderr.write('ERROR: No scripts found!');
   process.exit(1);
 }
-if (!pkg.betterScripts) {
-  process.stderr.write('ERROR: No betterScripts found!');
-  process.exit(1);
-}
 if (!scriptName) {
   process.stderr.write('ERROR: No script name provided!');
   process.exit(1);
 }
-if (!pkg.betterScripts[scriptName]) {
-  process.stderr.write('ERROR: No betterScript with name "' + scriptName + '" was found!');
+if (!pkg.betterScripts[scriptName] || !pkg.scripts[scriptName]) {
+  process.stderr.write('ERROR: No script / betterScript with name "' + scriptName + '" was found!');
   process.exit(1);
 }
 
@@ -65,7 +59,7 @@ if(!program.silent) {
   console.log('Executing script: ' + scriptName + '\n');
 }
 
-exec(pkg.betterScripts[scriptName], program, function (error, stdout, stderr) {
+exec(pkg.betterScripts[scriptName] || pkg.scripts[scriptName], program, function (error, stdout, stderr) {
   process.stderr.write(stderr);
   process.stdout.write(stdout);
   if(error !== null) {
